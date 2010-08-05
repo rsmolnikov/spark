@@ -1,0 +1,7 @@
+﻿<content name="title">Home Page</content>
+
+<content name="main">
+	<h2>Welcome to ASP.NET MVC!</h2>
+  <p>Go to Log On page to see client-side validation.</p>
+	<p>To learn more about ASP.NET MVC visit <a href="http://asp.net/mvc" title="ASP.NET MVC Website">http://asp.net/mvc</a>.</p>
+</content>

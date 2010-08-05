@@ -1,0 +1,50 @@
+﻿
+<viewdata model="LogOnModel" />
+<content name="title">Log On</content>
+
+<content name="main">
+  <h2>Log On</h2>
+  <p>
+    Please enter your username and password.
+  </p>
+  <form action="/Account/LogOn" validate="true" id="logonForm" method="post">
+  <div>
+    <fieldset>
+      <legend>First form with default style of json metadata which used by jClientValidation.js in conversion to JQuery validation.</legend>
+      
+      <p>
+        <label for="UserName">UserName</label>
+        <input id="UserName" name="UserName" type="text" value="$!{Model.UserName}" />
+      </p>
+      <p>
+        <label for="Password">Password</label>
+        <input id="Password" name="Password" type="text" value="$!{Model.Password}" />
+     </p>
+      <p>
+        <input type="submit" value="Log On" />
+      </p>
+    </fieldset>
+  </div>
+  </form>
+  <form action="/Account/LogOn" validate="mvc" method="post">
+    <div>
+      <fieldset>
+        <legend>Second form with mvc style of json metadata which can be used with MicrosoftMvcValidation.js or MicrosoftMvcJQueryValidation.js</legend>
+        
+        <p>
+          <label for="UserName">UserName</label>
+          <input id="UserName" name="UserName" type="text" value="$!{Model.UserName}" />
+          ${Html.ValidationMessageFor(Model => Model.UserName)}
+        </p>
+        <p>
+          <label for="Password">Password</label>
+          <input id="Password" name="Password" type="text" value="$!{Model.Password}" />
+          ${Html.ValidationMessageFor(Model => Model.Password)}
+        </p>
+        <p>
+          <input type="submit" value="Log On" />
+        </p>
+      </fieldset>
+    </div>
+  </form>
+</content>
