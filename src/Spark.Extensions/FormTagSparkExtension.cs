@@ -38,10 +38,16 @@ namespace Spark.Extensions
                 List<Node> newNodes = new List<Node>();
 
                 //Add ApplyPathModifier for Cookieless
-                AttributeNode actionNode = m_node.Attributes.SingleOrDefault(x => x.Name == "action");
-                AttributeNode newactionNode=Utilities.AddApplyPathModifier(actionNode);
-                m_node.Attributes.Remove(actionNode);
-                if (newactionNode!=null) m_node.Attributes.Add(newactionNode);
+                if (HttpContext.Current.Session.IsCookieless)
+                {
+                    AttributeNode actionNode = m_node.Attributes.SingleOrDefault(x => x.Name == "action");
+                    if (actionNode != null)
+                    {
+                        AttributeNode newactionNode = Utilities.AddMethodCallingToAttributeValue(actionNode,Constants.APPLYAPPPATHMODIFIER);
+                        m_node.Attributes.Remove(actionNode);
+                        m_node.Attributes.Add(newactionNode);
+                    }
+                }
 
                 if (validate)
                 {
@@ -100,22 +106,6 @@ namespace Spark.Extensions
         private readonly ElementNode m_node;
 
         private IList<Chunk> m_chunks;
-
-    }
-    internal class AttributeEqualityComparer : IEqualityComparer<AttributeNode>
-    {
-        public bool Equals(AttributeNode b1, AttributeNode b2)
-        {
-            if (b1.Name == b2.Name && b1.Value == b2.Value)
-                return true;
-            else
-                return false;
-        }
-
-        public int GetHashCode(AttributeNode bx)
-        {
-            return base.GetHashCode();
-        }
 
     }
 }

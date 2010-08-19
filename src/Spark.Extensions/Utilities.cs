@@ -7,21 +7,20 @@ using Spark.Parser.Markup;
 
 namespace Spark.Extensions
 {
-    static class Utilities
+    public static class Utilities
     {
-        internal static AttributeNode AddApplyPathModifier(AttributeNode node)
+        internal static AttributeNode AddMethodCallingToAttributeValue(AttributeNode node,string method)
         {
-            if (node != null)
-            {
-                if (HttpContext.Current.Session.IsCookieless)
-                {
-                    AttributeNode new_node = new AttributeNode(node.Name, String.Format(Constants.APPLYAPPPATHMODIFIER, node.Value));
-                    new_node.Nodes[0] = new ExpressionNode(String.Format(Constants.APPLYAPPPATHMODIFIER, node.Value));
-                    return new_node;
-                }
-                return node;
-            }
-            return null;
+            AttributeNode new_node = new AttributeNode(node.Name, String.Format(method, node.Value));
+            new_node.Nodes[0] = new ExpressionNode(String.Format(method, node.Value));
+            return new_node;
+        }
+        public static string AddBrowserDetails(string value)
+        {
+            var browser = HttpContext.Current.Request.Browser;
+            var cssClass = string.Format("{0} major-{1} minor-{2}", browser.Browser.ToLower(), browser.MajorVersion, browser.MinorVersion);
+            if (value != String.Empty) cssClass += " " + value;
+            return cssClass;
         }
     }
 }

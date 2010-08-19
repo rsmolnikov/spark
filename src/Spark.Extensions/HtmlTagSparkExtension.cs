@@ -15,11 +15,12 @@ using Spark.Compiler.CSharp.ChunkVisitors;
 namespace Spark.Extensions
 {
 
-    public class AnchorTagSparkExtension : ISparkExtension
+    public class HtmlTagSparkExtension : ISparkExtension
     {
-        public AnchorTagSparkExtension(ElementNode node)
+        public HtmlTagSparkExtension(ElementNode node)
         {
             m_node = node;
+           
         }
 
         public void VisitNode(INodeVisitor visitor, IList<Node> body, IList<Chunk> chunks)
@@ -28,17 +29,11 @@ namespace Spark.Extensions
             {
                 List<Node> newNodes = new List<Node>();
 
-                if (HttpContext.Current.Session.IsCookieless)
-                {
-                    //AddApplyPathModifier for Cookieless
-                    AttributeNode hrefNode = m_node.Attributes.SingleOrDefault(x => x.Name == "href");
-                    AttributeNode newhrefNode = Utilities.AddMethodCallingToAttributeValue(hrefNode,Constants.APPLYAPPPATHMODIFIER);
-                    if (hrefNode != null)
-                    {
-                        m_node.Attributes.Remove(hrefNode);
-                        m_node.Attributes.Add(newhrefNode);
-                    }
-                }
+                AttributeNode classNode = m_node.Attributes.SingleOrDefault(x => x.Name == "class");
+                if (classNode == null) classNode = new AttributeNode("class","");
+                AttributeNode newclassNode = Utilities.AddMethodCallingToAttributeValue(classNode,Constants.ADDBROWSERDETAILS);
+                m_node.Attributes.Remove(classNode);
+                m_node.Attributes.Add(newclassNode);
 
                 newNodes.Add(m_node);
                 newNodes.AddRange(body); 
@@ -55,7 +50,7 @@ namespace Spark.Extensions
         public void VisitChunk(IChunkVisitor visitor, OutputLocation location, IList<Chunk> body, StringBuilder output)
         {
             //when we need to accept chunks? only for GeneratedCodeVisitor or for all?
-            if ((visitor is GeneratedCodeVisitor) &&(location == OutputLocation.RenderMethod))
+            if ((visitor is GeneratedCodeVisitor) && (location == OutputLocation.RenderMethod))
                 visitor.Accept(m_chunks);
         }
 

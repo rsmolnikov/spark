@@ -47,8 +47,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AttributeEqualityComparer.cs" />
     <Compile Include="Constants.cs" />
     <Compile Include="AnchorTagSparkExtension.cs" />
+    <Compile Include="HtmlTagSparkExtension.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="FormTagSparkExtension.cs" />

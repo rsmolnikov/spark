@@ -16,6 +16,8 @@ namespace Spark.Extensions
         public ISparkExtension CreateExtension(VisitorContext context, ElementNode node)
         {  
             //what is better: create different extensions for each tags or place all code into one extension?
+            if (node.Name.Equals("html"))
+                return new HtmlTagSparkExtension(node);
             if (node.Name.Equals("form"))
                 return new FormTagSparkExtension(node);
             if (node.Name.Equals("a"))
