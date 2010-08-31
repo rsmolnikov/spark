@@ -32,9 +32,9 @@ namespace Spark.Extensions
                 {
                     //AddApplyPathModifier for Cookieless
                     AttributeNode hrefNode = m_node.Attributes.SingleOrDefault(x => x.Name == "href");
-                    AttributeNode newhrefNode = Utilities.AddMethodCallingToAttributeValue(hrefNode,Constants.APPLYAPPPATHMODIFIER);
                     if (hrefNode != null)
                     {
+                        AttributeNode newhrefNode = Utilities.AddMethodCallingToAttributeValue(hrefNode, Constants.APPLYAPPPATHMODIFIER);
                         m_node.Attributes.Remove(hrefNode);
                         m_node.Attributes.Add(newhrefNode);
                     }

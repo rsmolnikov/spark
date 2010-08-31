@@ -30,8 +30,8 @@ namespace Spark.Extensions
                 List<Node> newNodes = new List<Node>();
 
                 AttributeNode classNode = m_node.Attributes.SingleOrDefault(x => x.Name == "class");
-                if (classNode == null) classNode = new AttributeNode("class","");
-                AttributeNode newclassNode = Utilities.AddMethodCallingToAttributeValue(classNode,Constants.ADDBROWSERDETAILS);
+                if (classNode == null) classNode = new AttributeNode("class", "");
+                AttributeNode newclassNode = Utilities.AddMethodCallingToAttributeValue(classNode, Constants.ADDBROWSERDETAILS);
                 m_node.Attributes.Remove(classNode);
                 m_node.Attributes.Add(newclassNode);
 
@@ -50,8 +50,8 @@ namespace Spark.Extensions
         public void VisitChunk(IChunkVisitor visitor, OutputLocation location, IList<Chunk> body, StringBuilder output)
         {
             //when we need to accept chunks? only for GeneratedCodeVisitor or for all?
-            if ((visitor is GeneratedCodeVisitor) && (location == OutputLocation.RenderMethod))
-                visitor.Accept(m_chunks);
+            //if (location == OutputLocation.RenderMethod)
+                 visitor.Accept(m_chunks);
         }
 
         private readonly ElementNode m_node;

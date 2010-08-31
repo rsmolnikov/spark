@@ -47,6 +47,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spark.Web.Mvc.Pdf", "Spark.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spark.Web.Mvc.Pdf.Tests", "Spark.Web.Mvc.Pdf.Tests\Spark.Web.Mvc.Pdf.Tests.csproj", "{0799EE7A-58D3-467F-8DE6-8F3FFDDEF4A1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spark.Extensions", "Spark.Extensions\Spark.Extensions.csproj", "{BD2D7F5A-8F95-4CC8-8D69-A57775D79825}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -121,6 +123,10 @@ Global
 		{0799EE7A-58D3-467F-8DE6-8F3FFDDEF4A1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0799EE7A-58D3-467F-8DE6-8F3FFDDEF4A1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0799EE7A-58D3-467F-8DE6-8F3FFDDEF4A1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD2D7F5A-8F95-4CC8-8D69-A57775D79825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD2D7F5A-8F95-4CC8-8D69-A57775D79825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD2D7F5A-8F95-4CC8-8D69-A57775D79825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD2D7F5A-8F95-4CC8-8D69-A57775D79825}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
