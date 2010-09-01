@@ -4,6 +4,7 @@ using System.Text;
 using System.Web.Configuration;
 using System.Web;
 using Spark.Parser.Markup;
+using System.Linq;
 
 namespace Spark.Extensions
 {
@@ -15,6 +16,23 @@ namespace Spark.Extensions
             new_node.Nodes[0] = new ExpressionNode(String.Format(method, node.Value));
             return new_node;
         }
+
+        internal static void AddApplyPathModifier(IList<AttributeNode> attributes, string name)
+        {
+            //Response.ApplyAppPathModifier used not only to add cookie, it also resolves urls with ~.
+
+            //if (HttpContext.Current.Session.IsCookieless)
+            //{
+                AttributeNode node = attributes.SingleOrDefault(x => x.Name == name);
+                if (node != null)
+                {
+                    AttributeNode newNode = Utilities.AddMethodCallingToAttributeValue(node, Constants.APPLYAPPPATHMODIFIER);
+                    attributes.Remove(node);
+                    attributes.Add(newNode);
+                }
+            //}
+        }
+
         public static string AddBrowserDetails(string value)
         {
             var browser = HttpContext.Current.Request.Browser;

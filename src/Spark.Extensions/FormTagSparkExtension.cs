@@ -37,17 +37,7 @@ namespace Spark.Extensions
             {
                 List<Node> newNodes = new List<Node>();
 
-                //Add ApplyPathModifier for Cookieless
-                if (HttpContext.Current.Session.IsCookieless)
-                {
-                    AttributeNode actionNode = m_node.Attributes.SingleOrDefault(x => x.Name == "action");
-                    if (actionNode != null)
-                    {
-                        AttributeNode newactionNode = Utilities.AddMethodCallingToAttributeValue(actionNode,Constants.APPLYAPPPATHMODIFIER);
-                        m_node.Attributes.Remove(actionNode);
-                        m_node.Attributes.Add(newactionNode);
-                    }
-                }
+                Utilities.AddApplyPathModifier(m_node.Attributes, "action");
 
                 if (validate)
                 {

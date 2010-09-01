@@ -28,17 +28,7 @@ namespace Spark.Extensions
             {
                 List<Node> newNodes = new List<Node>();
 
-                if (HttpContext.Current.Session.IsCookieless)
-                {
-                    //AddApplyPathModifier for Cookieless
-                    AttributeNode hrefNode = m_node.Attributes.SingleOrDefault(x => x.Name == "href");
-                    if (hrefNode != null)
-                    {
-                        AttributeNode newhrefNode = Utilities.AddMethodCallingToAttributeValue(hrefNode, Constants.APPLYAPPPATHMODIFIER);
-                        m_node.Attributes.Remove(hrefNode);
-                        m_node.Attributes.Add(newhrefNode);
-                    }
-                }
+                Utilities.AddApplyPathModifier(m_node.Attributes,"href");
 
                 newNodes.Add(m_node);
                 newNodes.AddRange(body); 
