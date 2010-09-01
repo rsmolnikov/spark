@@ -18,8 +18,8 @@ namespace Spark.Extensions
             //what is better: create different extensions for each tags or place all code into one extension?
             switch (node.Name)
             {
-                case "html":
-                    return new HtmlTagSparkExtension(node);
+                case "body":
+                    return new BodyTagSparkExtension(node);
                 case "form":
                     return new FormTagSparkExtension(node);
                 case "a":

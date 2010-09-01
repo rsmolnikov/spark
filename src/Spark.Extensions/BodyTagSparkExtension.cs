@@ -15,9 +15,9 @@ using Spark.Compiler.CSharp.ChunkVisitors;
 namespace Spark.Extensions
 {
 
-    public class HtmlTagSparkExtension : ISparkExtension
+    public class BodyTagSparkExtension : ISparkExtension
     {
-        public HtmlTagSparkExtension(ElementNode node)
+        public BodyTagSparkExtension(ElementNode node)
         {
             m_node = node;
            
