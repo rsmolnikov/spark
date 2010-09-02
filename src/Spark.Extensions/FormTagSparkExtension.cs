@@ -78,9 +78,7 @@ namespace Spark.Extensions
 
         public void VisitChunk(IChunkVisitor visitor, OutputLocation location, IList<Chunk> body, StringBuilder output)
         {
-            //when we need to accept chunks? only for GeneratedCodeVisitor or for all?
-            if ((visitor is GeneratedCodeVisitor) && (location == OutputLocation.RenderMethod))
-                visitor.Accept(m_chunks);
+            visitor.Accept(m_chunks);
         }
 
         private string GenerateFormId()

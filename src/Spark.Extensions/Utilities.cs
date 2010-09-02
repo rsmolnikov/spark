@@ -20,17 +20,13 @@ namespace Spark.Extensions
         internal static void AddApplyPathModifier(IList<AttributeNode> attributes, string name)
         {
             //Response.ApplyAppPathModifier used not only to add cookie, it also resolves urls with ~.
-
-            //if (HttpContext.Current.Session.IsCookieless)
-            //{
-                AttributeNode node = attributes.SingleOrDefault(x => x.Name == name);
-                if (node != null)
-                {
-                    AttributeNode newNode = Utilities.AddMethodCallingToAttributeValue(node, Constants.APPLYAPPPATHMODIFIER);
-                    attributes.Remove(node);
-                    attributes.Add(newNode);
-                }
-            //}
+            AttributeNode node = attributes.SingleOrDefault(x => x.Name == name);
+            if ((node != null)&&(!node.Value.StartsWith("#")))
+            {
+                AttributeNode newNode = Utilities.AddMethodCallingToAttributeValue(node, Constants.APPLYAPPPATHMODIFIER);
+                attributes.Remove(node);
+                attributes.Add(newNode);
+            }
         }
 
         public static string AddBrowserDetails(string value)
