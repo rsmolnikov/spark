@@ -11,7 +11,8 @@ namespace Spark.Extensions
         public const string HTML_GETCLIENTVALIDATIONJSON = "Html.GetClientValidationJson(\"{0}\", OutputStyle.{1});";
         public const string DEFAULTJSONFORMAT = "\r\n<script type=\"text/javascript\">\r\nif (clientValidation == undefined) var clientValidation = new Array(); clientValidation[\"{0}\"] =  {1};\r\n</script>";
         public const string VALIDATE_ATTRIBUTE = "validate";
-        public const string APPLYAPPPATHMODIFIER = "Response.ApplyAppPathModifier(\"{0}\")";
-        public const string ADDBROWSERDETAILS = "Utilities.AddBrowserDetails(\"{0}\")";
+        public const string APPLYAPPPATHMODIFIER = "Response.ApplyAppPathModifier";
+        public const string ADDBROWSERDETAILS = "Utilities.AddBrowserDetails";
+        public const string STRINGWRAPPER = "\"{0}\"";
     }
 }
