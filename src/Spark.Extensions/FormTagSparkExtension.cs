@@ -38,6 +38,7 @@ namespace Spark.Extensions
                 List<Node> newNodes = new List<Node>();
 
                 Utilities.AddApplyPathModifier(m_node.Attributes, "action");
+                HttpMethodOverride(body);
 
                 if (validate)
                 {
@@ -79,6 +80,28 @@ namespace Spark.Extensions
         public void VisitChunk(IChunkVisitor visitor, OutputLocation location, IList<Chunk> body, StringBuilder output)
         {
             visitor.Accept(m_chunks);
+        }
+
+        private void HttpMethodOverride(IList<Node> body)
+        {
+            AttributeNode methodNode = m_node.Attributes.SingleOrDefault(x => x.Name == "method");
+            if ((methodNode!=null)&&((methodNode.Value == "put") || (methodNode.Value == "delete")))
+            {
+                m_node.Attributes.Remove(methodNode);
+                m_node.Attributes.Add(new AttributeNode("method", "post"));
+
+                List<AttributeNode> listAttributes = new List<AttributeNode>();
+                listAttributes.Add(new AttributeNode("name", "x-http-method-override"));
+                listAttributes.Add(new AttributeNode("type", "hidden"));
+                listAttributes.Add(new AttributeNode("value", methodNode.Value));
+                int indexOfFieldsetNode = 0;
+
+                ElementNode elNode = body.OfType<ElementNode>().FirstOrDefault(x => x.Name == "fieldset");
+                if (elNode != null) indexOfFieldsetNode = body.IndexOf(elNode);
+
+                body.Insert(indexOfFieldsetNode + 1, new TextNode(Constants.NEWLINE));
+                body.Insert(indexOfFieldsetNode + 2, new ElementNode("input", listAttributes, true));
+            }
         }
 
         private string GenerateFormId()
