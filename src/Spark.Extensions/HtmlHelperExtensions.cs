@@ -1,10 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Globalization;
-using System.Web.Mvc.Html;
 
 namespace Spark.Extensions
 {
@@ -17,14 +15,10 @@ namespace Spark.Extensions
     //class for JavaScript serialization
     internal class ClientValidationField
     {
-        private string _field;
         private List<ModelClientValidationRule> _attributes = new List<ModelClientValidationRule>();
 
-        public string Field
-        {
-            get { return _field; }
-            set { _field = value; }
-        }
+        public string Field { get; set; }
+
         public List<ModelClientValidationRule> Attributes
         {
             get { return _attributes; }
@@ -34,31 +28,32 @@ namespace Spark.Extensions
     }
     public static class HtmlHelperExtensions
     {
-        public static void GetClientValidationJson(this HtmlHelper htmlHelper, string formID, OutputStyle outputStyle)
+        public static void GetClientValidationJson(this HtmlHelper htmlHelper, string formId, OutputStyle outputStyle, object model)
         {
             if (outputStyle.Equals(OutputStyle.Default))
             {
-                List<ClientValidationField> FieldValidators = new List<ClientValidationField>();
-                foreach (ModelMetadata metadata in htmlHelper.ViewData.ModelMetadata.Properties)
+                var fieldValidators = new List<ClientValidationField>();
+                var viewDataDictionary = (model != null)
+                                                            ? new ViewDataDictionary(model)
+                                                            : htmlHelper.ViewData;
+
+
+                foreach (ModelMetadata metadata in viewDataDictionary.ModelMetadata.Properties)
                 {
-                    ClientValidationField field = new ClientValidationField();
-                    field.Field = metadata.PropertyName;
-                    foreach (ModelClientValidationRule rule in metadata.GetValidators(htmlHelper.ViewContext).SelectMany<ModelValidator, ModelClientValidationRule>(delegate(ModelValidator v)
-                    {
-                        return v.GetClientValidationRules();
-                    }))
+                    var field = new ClientValidationField {Field = metadata.PropertyName};
+                    foreach (var rule in
+                        metadata.GetValidators(htmlHelper.ViewContext).SelectMany(modelValidator => modelValidator.GetClientValidationRules()))
                     {
                         field.Attributes.Add(rule);
                     }
-                    FieldValidators.Add(field);
+                    if (field.Attributes.Count!=0)
+                        fieldValidators.Add(field);
                 }
-                JavaScriptSerializer serializer = new JavaScriptSerializer();
-                SortedDictionary<string, object> dictionary = new SortedDictionary<string, object>();
-                dictionary.Add("ns", formID);
-                dictionary.Add("rules", FieldValidators);
+                var serializer = new JavaScriptSerializer();
+                var dictionary = new SortedDictionary<string, object> {{"ns", formId}, {"rules", fieldValidators}};
 
-                string jsonValidationMetadata = serializer.Serialize(dictionary);
-                string str3 = string.Format(CultureInfo.InvariantCulture, Constants.DEFAULTJSONFORMAT, new object[] { formID, jsonValidationMetadata });
+                var jsonValidationMetadata = serializer.Serialize(dictionary);
+                var str3 = string.Format(CultureInfo.InvariantCulture, Constants.DEFAULTJSONFORMAT, new object[] { formId, jsonValidationMetadata });
                 htmlHelper.ViewContext.Writer.Write(str3);
             }
             else if (outputStyle.Equals(OutputStyle.MVC))
@@ -68,9 +63,15 @@ namespace Spark.Extensions
             }
         }
 
-        public static void GetClientValidationJson(this HtmlHelper htmlHelper, string formID)
+        public static void GetClientValidationJson(this HtmlHelper htmlHelper, string formId)
         {
-            GetClientValidationJson(htmlHelper, formID, OutputStyle.Default);
+            GetClientValidationJson(htmlHelper, formId, OutputStyle.Default, null);
+        }
+
+        public static void Test(this HtmlHelper htmlHelper, object tmodel)
+        {
+            var dict= new System.Web.Mvc.ViewDataDictionary(tmodel);
+            
         }
     }
     

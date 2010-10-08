@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Web;
 using Spark.Parser.Markup;
 using System.Linq;
@@ -13,25 +12,23 @@ namespace Spark.Extensions
     {
         internal static AttributeNode AddMethodCallingToAttributeValue(AttributeNode node, string method)
         {
-            Snippets snippets = new Snippets();
-            snippets.Add(new Snippet(){Value= method+"(H("});
-            snippets.AddRange(AttributeNodeExtensions.AsCodeInverted(node));
-            snippets.Add(new Snippet(){Value= "))"});
+            var snippets = new Snippets {new Snippet {Value = method + "(H("}};
+            snippets.AddRange(node.AsCodeInverted());
+            snippets.Add(new Snippet {Value= "))"});
 
-            ExpressionBuilder builder = new ExpressionBuilder();
+            var builder = new ExpressionBuilder();
             builder.AppendExpression(snippets);
-            List<Node> listNodes=new List<Node>();
-            listNodes.Add(new ExpressionNode(snippets));
+            var listNodes=new List<Node> {new ExpressionNode(snippets)};
             return new AttributeNode(node.Name, listNodes);
         }
 
         internal static void AddApplyPathModifier(IList<AttributeNode> attributes, string name)
         {
             //Response.ApplyAppPathModifier used not only to add cookie, it also resolves urls with ~.
-            AttributeNode node = attributes.SingleOrDefault(x => x.Name == name);
+            var node = attributes.SingleOrDefault(x => x.Name == name);
             if ((node != null)&&(!node.Value.StartsWith("#")))
             {
-                AttributeNode newNode = Utilities.AddMethodCallingToAttributeValue(node, Constants.APPLYAPPPATHMODIFIER);
+                var newNode = AddMethodCallingToAttributeValue(node, Constants.APPLYAPPPATHMODIFIER);
                 attributes.Remove(node);
                 attributes.Add(newNode);
             }

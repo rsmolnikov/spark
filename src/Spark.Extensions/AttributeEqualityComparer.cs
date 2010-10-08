@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
+﻿using System.Collections.Generic;
 using Spark.Parser.Markup;
 
 namespace Spark.Extensions
@@ -11,8 +9,7 @@ namespace Spark.Extensions
         {
             if (b1.Name == b2.Name && b1.Value == b2.Value)
                 return true;
-            else
-                return false;
+            return false;
         }
 
         public int GetHashCode(AttributeNode bx)

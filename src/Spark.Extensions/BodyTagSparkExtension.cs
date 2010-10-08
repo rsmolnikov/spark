@@ -1,16 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using Spark;
 using Spark.Parser.Markup;
 using Spark.Compiler.NodeVisitors;
 using Spark.Compiler;
 using Spark.Compiler.ChunkVisitors;
-using System.Web.Mvc;
-using System.Globalization;
-using System.Web;
-using Spark.Compiler.CSharp.ChunkVisitors;
 
 namespace Spark.Extensions
 {
@@ -19,7 +13,7 @@ namespace Spark.Extensions
     {
         public BodyTagSparkExtension(ElementNode node)
         {
-            m_node = node;
+            _mNode = node;
            
         }
 
@@ -27,34 +21,34 @@ namespace Spark.Extensions
         {
             if (visitor is ChunkBuilderVisitor)
             {
-                List<Node> newNodes = new List<Node>();
+                var newNodes = new List<Node>();
 
-                AttributeNode classNode = m_node.Attributes.SingleOrDefault(x => x.Name == "class");
-                if (classNode == null) classNode = new AttributeNode("class", "");
-                AttributeNode newclassNode = Utilities.AddMethodCallingToAttributeValue(classNode, Constants.ADDBROWSERDETAILS);
-                m_node.Attributes.Remove(classNode);
-                m_node.Attributes.Add(newclassNode);
+                var classNode = _mNode.Attributes.SingleOrDefault(x => x.Name == "class") ??
+                                new AttributeNode("class", "");
+                var newclassNode = Utilities.AddMethodCallingToAttributeValue(classNode, Constants.ADDBROWSERDETAILS);
+                _mNode.Attributes.Remove(classNode);
+                _mNode.Attributes.Add(newclassNode);
 
-                newNodes.Add(m_node);
+                newNodes.Add(_mNode);
                 newNodes.AddRange(body); 
-                newNodes.Add(new EndElementNode(m_node.Name));
+                newNodes.Add(new EndElementNode(_mNode.Name));
 
                 // visit the new nodes normally
                 visitor.Accept(newNodes);
 
                 // keep the output chunks to render later
-                m_chunks = chunks;
+                _mChunks = chunks;
             }
         }
 
         public void VisitChunk(IChunkVisitor visitor, OutputLocation location, IList<Chunk> body, StringBuilder output)
         {
-             visitor.Accept(m_chunks);
+             visitor.Accept(_mChunks);
         }
 
-        private readonly ElementNode m_node;
+        private readonly ElementNode _mNode;
 
-        private IList<Chunk> m_chunks;
+        private IList<Chunk> _mChunks;
 
     }
 }
