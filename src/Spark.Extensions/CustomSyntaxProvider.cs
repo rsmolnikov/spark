@@ -47,16 +47,17 @@ namespace Spark.Extensions
             if (_releaseMode)
             {
                 ((List<Node>)nodes).RemoveAll(x => (x.GetType() == typeof(CommentNode)));
-                var nodesToRem=new List<Node>();
+                var nodesToRem = new List<Node>();
                 foreach (var textNode in nodes.OfType<TextNode>())
                 {
-                    Regex r = new Regex("\\s+");
-                    textNode.Text = r.Replace(textNode.Text, "\n");
-                    var i=nodes.IndexOf(textNode);
-                    if ((i>0)&&(nodes[i-1].GetType()==typeof(TextNode))&&(((TextNode)nodes[i-1]).Text=="\n"))
+                    var i = nodes.IndexOf(textNode);
+                    textNode.Text = Regex.Replace(textNode.Text, "\r\n+|\n+|\t+", "");
+                    textNode.Text = Regex.Replace(textNode.Text, "\\s+", " ");
+                    //delete node if it is empty or same as previous. (e.g. with one space = " ")
+                    if ((String.IsNullOrEmpty(textNode.Text)) || ((i > 0) && (nodes[i - 1].GetType() == typeof(TextNode)) && (((TextNode)nodes[i - 1]).Text == textNode.Text)))
                         nodesToRem.Add(textNode);
                 }
-                ((List<Node>)nodes).RemoveAll(x => nodesToRem.IndexOf(x) >= 0);
+                ((List<Node>)nodes).RemoveAll(x => nodesToRem.Contains(x));
             }
 
             foreach (var visitor in BuildNodeVisitors(context))
