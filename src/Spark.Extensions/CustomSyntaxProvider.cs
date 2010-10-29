@@ -27,6 +27,7 @@ namespace Spark.Extensions
 
         public override IList<Chunk> GetChunks(VisitorContext context, string path)
         {
+            if (!_releaseMode) return base.GetChunks(context, path);
             context.SyntaxProvider = this;
             context.ViewPath = path;
 
@@ -44,21 +45,19 @@ namespace Spark.Extensions
             var nodes = result.Value;
 
             //Minification
-            if (_releaseMode)
+            ((List<Node>)nodes).RemoveAll(x => (x.GetType() == typeof(CommentNode)));
+            var nodesToRem = new List<Node>();
+            foreach (var textNode in nodes.OfType<TextNode>())
             {
-                ((List<Node>)nodes).RemoveAll(x => (x.GetType() == typeof(CommentNode)));
-                var nodesToRem = new List<Node>();
-                foreach (var textNode in nodes.OfType<TextNode>())
+                if (String.IsNullOrEmpty(textNode.Text.Trim()))
                 {
-                    var i = nodes.IndexOf(textNode);
-                    textNode.Text = Regex.Replace(textNode.Text, "\r\n+|\n+|\t+", "");
-                    textNode.Text = Regex.Replace(textNode.Text, "\\s+", " ");
-                    //delete node if it is empty or same as previous. (e.g. with one space = " ")
-                    if ((String.IsNullOrEmpty(textNode.Text)) || ((i > 0) && (nodes[i - 1].GetType() == typeof(TextNode)) && (((TextNode)nodes[i - 1]).Text == textNode.Text)))
-                        nodesToRem.Add(textNode);
-                }
-                ((List<Node>)nodes).RemoveAll(x => nodesToRem.Contains(x));
+                    nodesToRem.Add(textNode);
+                    continue;
+                }            
+                textNode.Text = Regex.Replace(textNode.Text, "\\s+", " ");
             }
+            ((List<Node>)nodes).RemoveAll(x => nodesToRem.Contains(x));
+            //end of Minification
 
             foreach (var visitor in BuildNodeVisitors(context))
             {

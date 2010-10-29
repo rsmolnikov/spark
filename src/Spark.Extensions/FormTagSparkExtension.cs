@@ -20,12 +20,7 @@ namespace Spark.Extensions
 
         public FormTagSparkExtension(ElementNode node)
         {
-            _mNode = node;
-            //if (node.Attributes.Contains(new AttributeNode(Constants.VALIDATE_ATTRIBUTE, "true"), new AttributeEqualityComparer()))
-            //    this.outputStyle = OutputStyle.Default;
-            //else if (node.Attributes.Contains(new AttributeNode(Constants.VALIDATE_ATTRIBUTE, "mvc"), new AttributeEqualityComparer()))
-            //    this.outputStyle = OutputStyle.MVC;
-            //else validate = false;
+            _mNode = node; 
             var attributeNode = node.Attributes.SingleOrDefault(x => x.Name == Constants.VALIDATE_ATTRIBUTE);
             if (attributeNode != null)
             {
@@ -110,7 +105,6 @@ namespace Spark.Extensions
                 var elNode = body.OfType<ElementNode>().FirstOrDefault(x => x.Name == "fieldset");
                 if (elNode != null) indexOfFieldsetNode = body.IndexOf(elNode);
 
-                body.Insert(indexOfFieldsetNode + 1, new TextNode(Constants.NEWLINE));
                 body.Insert(indexOfFieldsetNode + 2, new ElementNode("input", listAttributes, true));
             }
         }
