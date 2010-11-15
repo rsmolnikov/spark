@@ -28,7 +28,18 @@ namespace Spark.Extensions
             var node = attributes.SingleOrDefault(x => x.Name == name);
             if ((node != null)&&(!node.Value.StartsWith("#")))
             {
-                var newNode = AddMethodCallingToAttributeValue(node, Constants.APPLYAPPPATHMODIFIER);
+                var newNode = AddMethodCallingToAttributeValue(AddMethodCallingToAttributeValue(node,Constants.TOAPPLICATIONRELATIVEURL), Constants.APPLYAPPPATHMODIFIER);
+                attributes.Remove(node);
+                attributes.Add(newNode);
+            }
+        }
+
+        internal static void ToApplicationRelativeUrl(IList<AttributeNode> attributes, string name)
+        {
+            var node = attributes.SingleOrDefault(x => x.Name == name);
+            if ((node != null) && (!node.Value.StartsWith("#")))
+            {
+                var newNode = AddMethodCallingToAttributeValue(node, Constants.TOAPPLICATIONRELATIVEURL);
                 attributes.Remove(node);
                 attributes.Add(newNode);
             }

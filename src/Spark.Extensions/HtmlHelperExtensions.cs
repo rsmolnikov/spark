@@ -68,10 +68,16 @@ namespace Spark.Extensions
             GetClientValidationJson(htmlHelper, formId, OutputStyle.Default, null);
         }
 
-        public static void Test(this HtmlHelper htmlHelper, object tmodel)
+        public static string ToApplicationRelativeUrl(this HtmlHelper htmlHelper, string url)
         {
-            var dict= new System.Web.Mvc.ViewDataDictionary(tmodel);
-            
+            url=url.Trim();
+            if (string.IsNullOrEmpty(url))
+                return url;
+            if (url.StartsWith("/"))
+                url=System.String.Format("~{0}", url);
+            else if (!url.StartsWith("~"))
+                return url;
+            return System.Web.VirtualPathUtility.ToAbsolute(url);         
         }
     }
     

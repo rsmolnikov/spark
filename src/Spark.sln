@@ -51,6 +51,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.Pdf", "Cast
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Castle.MonoRail.Pdf.Tests", "Castle.Monorail.Pdf.Tests\Castle.MonoRail.Pdf.Tests.csproj", "{0FEC123E-DFD8-4DB0-9FC7-6C2EF2897FAD}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Spark.Extensions", "Spark.Extensions\Spark.Extensions.csproj", "{BD2D7F5A-8F95-4CC8-8D69-A57775D79825}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -133,6 +135,10 @@ Global
 		{0FEC123E-DFD8-4DB0-9FC7-6C2EF2897FAD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0FEC123E-DFD8-4DB0-9FC7-6C2EF2897FAD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0FEC123E-DFD8-4DB0-9FC7-6C2EF2897FAD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{BD2D7F5A-8F95-4CC8-8D69-A57775D79825}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{BD2D7F5A-8F95-4CC8-8D69-A57775D79825}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{BD2D7F5A-8F95-4CC8-8D69-A57775D79825}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{BD2D7F5A-8F95-4CC8-8D69-A57775D79825}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

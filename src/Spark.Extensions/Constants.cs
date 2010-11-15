@@ -8,6 +8,7 @@
         public const string VALIDATE_ATTRIBUTE = "validate";
         public const string VALIDATEMODEL_ATTRIBUTE = "validatemodel";
         public const string APPLYAPPPATHMODIFIER = "Response.ApplyAppPathModifier";
+        public const string TOAPPLICATIONRELATIVEURL = "Html.ToApplicationRelativeUrl";
         public const string ADDBROWSERDETAILS = "Utilities.AddBrowserDetails";
     }
 }

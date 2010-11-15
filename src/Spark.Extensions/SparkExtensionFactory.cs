@@ -16,6 +16,12 @@ namespace Spark.Extensions
                     return new FormTagSparkExtension(node);
                 case "a":
                     return new AnchorTagSparkExtension(node);
+                case "link":
+                    return new StaticResourcesTagsSparkExtension(node, "href");
+                case "script":
+                    return new StaticResourcesTagsSparkExtension(node, "src");
+                case "img":
+                    return new StaticResourcesTagsSparkExtension(node, "src");
                 default:
                     return null;
             }

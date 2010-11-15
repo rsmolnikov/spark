@@ -7,12 +7,14 @@ using Spark.Compiler.ChunkVisitors;
 
 namespace Spark.Extensions
 {
-
-    public class AnchorTagSparkExtension : ISparkExtension
+    //for link, script and img tags. In future they may will be separated.
+    public class StaticResourcesTagsSparkExtension : ISparkExtension
     {
-        public AnchorTagSparkExtension(ElementNode node)
+        private string _linkattribute;
+        public StaticResourcesTagsSparkExtension(ElementNode node, string linkAttribute)
         {
             _mNode = node;
+            _linkattribute = linkAttribute;
         }
 
         public void VisitNode(INodeVisitor visitor, IList<Node> body, IList<Chunk> chunks)
@@ -21,8 +23,8 @@ namespace Spark.Extensions
             {
                 var newNodes = new List<Node>();
 
-                Utilities.AddApplyPathModifier(_mNode.Attributes,"href");
-
+                Utilities.ToApplicationRelativeUrl(_mNode.Attributes, _linkattribute);
+                
                 newNodes.Add(_mNode);
                 if (!_mNode.IsEmptyElement)
                 {
