@@ -70,7 +70,7 @@ namespace Spark.Extensions
 
         public static string ToApplicationRelativeUrl(this HtmlHelper htmlHelper, string url)
         {
-            url=url.Trim();
+            url = url.Trim().Replace("\\", "/") ;
             if (string.IsNullOrEmpty(url))
                 return url;
             if (url.StartsWith("/"))

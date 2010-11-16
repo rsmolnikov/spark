@@ -12,9 +12,9 @@ namespace Spark.Extensions
     {
         internal static AttributeNode AddMethodCallingToAttributeValue(AttributeNode node, string method)
         {
-            var snippets = new Snippets {new Snippet {Value = method + "(H("}};
+            var snippets = new Snippets {new Snippet {Value = method + "("}};
             snippets.AddRange(node.AsCodeInverted());
-            snippets.Add(new Snippet {Value= "))"});
+            snippets.Add(new Snippet {Value= ")"});
 
             var builder = new ExpressionBuilder();
             builder.AppendExpression(snippets);
