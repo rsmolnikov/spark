@@ -35,6 +35,9 @@
       <SpecificVersion>False</SpecificVersion>
       <HintPath>..\..\..\..\AIM\ImasisFoundation\Dependencies\Spark.dll</HintPath>
     </Reference>
+    <Reference Include="Spark.Web.Mvc">
+      <HintPath>..\..\..\..\AIM\ImasisFoundation\Dependencies\Spark.Web.Mvc.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -55,6 +58,7 @@
     <Compile Include="Constants.cs" />
     <Compile Include="AnchorTagSparkExtension.cs" />
     <Compile Include="BodyTagSparkExtension.cs" />
+    <Compile Include="PrecompiledSupportDescriptorBuilder.cs" />
     <Compile Include="StaticResourcesTagsSparkExtension.cs" />
     <Compile Include="CustomSyntaxProvider.cs" />
     <Compile Include="HtmlHelperExtensions.cs" />
