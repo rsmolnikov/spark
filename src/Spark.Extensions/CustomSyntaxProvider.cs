@@ -57,6 +57,14 @@ namespace Spark.Extensions
                 textNode.Text = Regex.Replace(textNode.Text, "\\s+", " ");
             }
             ((List<Node>)nodes).RemoveAll(x => nodesToRem.Contains(x));
+            foreach (var elementNode in nodes.OfType<ElementNode>())
+            {
+                elementNode.PreceedingWhitespace = null;
+            }
+            foreach (var elementNode in nodes.OfType<EndElementNode>())
+            {
+                elementNode.PreceedingWhitespace = null;
+            }
             //end of Minification
 
             foreach (var visitor in BuildNodeVisitors(context))
@@ -79,9 +87,9 @@ namespace Spark.Extensions
                            new PrefixExpandingVisitor(context),
                            new SpecialNodeVisitor(context),
                            new CacheAttributeVisitor(context),
+                           new WhitespaceCleanerVisitor(context),
                            new ForEachAttributeVisitor(context),
                            new ConditionalAttributeVisitor(context),
-                           new OmitExtraLinesVisitor(context),
                            new TestElseElementVisitor(context),
                            new OnceAttributeVisitor(context),
                            new UrlAttributeVisitor(context),

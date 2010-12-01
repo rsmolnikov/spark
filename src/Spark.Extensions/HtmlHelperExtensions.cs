@@ -3,6 +3,8 @@ using System.Linq;
 using System.Web.Mvc;
 using System.Web.Script.Serialization;
 using System.Globalization;
+using System;
+using System.Web;
 
 namespace Spark.Extensions
 {
@@ -77,7 +79,7 @@ namespace Spark.Extensions
                 url=System.String.Format("~{0}", url);
             else if (!url.StartsWith("~"))
                 return url;
-            return System.Web.VirtualPathUtility.ToAbsolute(url);         
+           return String.IsNullOrEmpty(HttpRuntime.AppDomainAppVirtualPath) ? VirtualPathUtility.ToAbsolute(url, "/") : VirtualPathUtility.ToAbsolute(url);  
         }
     }
     

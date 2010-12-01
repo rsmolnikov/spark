@@ -31,13 +31,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Spark, Version=1.1.0.0, Culture=neutral, PublicKeyToken=7f8549eed921a12c, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\..\..\AIM\ImasisFoundation\Dependencies\Spark.dll</HintPath>
-    </Reference>
-    <Reference Include="Spark.Web.Mvc">
-      <HintPath>..\..\..\..\AIM\ImasisFoundation\Dependencies\Spark.Web.Mvc.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.configuration, Version=2.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <SpecificVersion>False</SpecificVersion>
@@ -66,6 +59,16 @@
     <Compile Include="FormTagSparkExtension.cs" />
     <Compile Include="SparkExtensionFactory.cs" />
     <Compile Include="Utilities.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Spark.Web.Mvc\Spark.Web.Mvc.csproj">
+      <Project>{286050D6-95A1-4381-93D8-93381D8AB8E2}</Project>
+      <Name>Spark.Web.Mvc</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Spark\Spark.csproj">
+      <Project>{31929D34-1A68-4A6B-9D8A-B93037163A5A}</Project>
+      <Name>Spark</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
