@@ -51,6 +51,8 @@
     <Compile Include="Constants.cs" />
     <Compile Include="AnchorTagSparkExtension.cs" />
     <Compile Include="BodyTagSparkExtension.cs" />
+    <Compile Include="Validation\JqueryValidateJavaScriptRunner.cs" />
+    <Compile Include="Validation\IJavaScriptRunner.cs" />
     <Compile Include="PrecompiledSupportDescriptorBuilder.cs" />
     <Compile Include="StaticResourcesTagsSparkExtension.cs" />
     <Compile Include="CustomSyntaxProvider.cs" />
@@ -79,6 +81,7 @@
   </Target>
   -->
   <PropertyGroup>
-    <PostBuildEvent>copy /Y C:\Work\SRC\GitHub\Spark\src\Spark.Extensions\bin\Debug\Spark.Extensions* C:\Work\SRC\AIM\Framework\Dependencies</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

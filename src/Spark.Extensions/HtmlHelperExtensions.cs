@@ -5,6 +5,7 @@ using System.Web.Script.Serialization;
 using System.Globalization;
 using System;
 using System.Web;
+using Spark.Extensions.Validation;
 
 namespace Spark.Extensions
 {
@@ -30,11 +31,13 @@ namespace Spark.Extensions
     }
     public static class HtmlHelperExtensions
     {
+        public static IJavaScriptRunner javaScriptRunner { get; set; }
+
         public static void GetClientValidationJson(this HtmlHelper htmlHelper, string formId, OutputStyle outputStyle, object model)
         {
             if (outputStyle.Equals(OutputStyle.Default))
             {
-                var fieldValidators = new List<ClientValidationField>();
+                var fieldValidators = new Dictionary<string, IList<ModelClientValidationRule>>();
                 var viewDataDictionary = (model != null)
                                                             ? new ViewDataDictionary(model)
                                                             : htmlHelper.ViewData;
@@ -42,19 +45,18 @@ namespace Spark.Extensions
 
                 foreach (ModelMetadata metadata in viewDataDictionary.ModelMetadata.Properties)
                 {
-                    var field = new ClientValidationField {Field = metadata.PropertyName};
+                   // var field = new ClientValidationField {Field = metadata.PropertyName};
+                    var rulesList=new List<ModelClientValidationRule>();
                     foreach (var rule in
                         metadata.GetValidators(htmlHelper.ViewContext).SelectMany(modelValidator => modelValidator.GetClientValidationRules()))
                     {
-                        field.Attributes.Add(rule);
+                        rulesList.Add(rule);
                     }
-                    if (field.Attributes.Count!=0)
-                        fieldValidators.Add(field);
+                    if (rulesList.Count!=0)
+                        fieldValidators.Add(metadata.PropertyName,rulesList);
                 }
-                var serializer = new JavaScriptSerializer();
-                var dictionary = new SortedDictionary<string, object> {{"ns", formId}, {"rules", fieldValidators}};
-
-                var jsonValidationMetadata = serializer.Serialize(dictionary);
+                if (javaScriptRunner == null) javaScriptRunner = new JqueryValidateJavaScriptRunner();
+                var jsonValidationMetadata = javaScriptRunner.GetClientValidationJson(fieldValidators);
                 var str3 = string.Format(CultureInfo.InvariantCulture, Constants.DEFAULTJSONFORMAT, new object[] { formId, jsonValidationMetadata });
                 htmlHelper.ViewContext.Writer.Write(str3);
             }
